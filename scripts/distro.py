@@ -9,9 +9,8 @@
 import os
 import platform
 import re
-from .iso import *
 from .isodump3 import ISO9660
-from .gen import *
+from .gen import fileopen, log
 from . import _7zip
 
 
@@ -29,8 +28,10 @@ def distro(iso_cfg_ext_dir, iso_link):
             for name in files:
                 if name.endswith(('.cfg', '.CFG', '.txt', '.TXT', '.lst')):
                     try:
-                        # errors='ignore' is required as some files also contain non utf character
-                        string = open(os.path.join(path, name), errors='ignore').read()
+                        # errors='ignore' is required as some files also
+                        # contain non utf character
+                        string = fileopen(os.path.join(path, name), 
+                                          errors='ignore').read()
                     except IOError:
                         return "Read Error."
                     else:

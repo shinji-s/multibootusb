@@ -81,8 +81,9 @@ def list_iso(iso_link, suppress_out=True):
         file_list = []
         _cmd = _7zip + ' l ' + gen.quote(iso_link) + suppress_out
         try:
-            _cmd_out = subprocess.check_output(_cmd, stderr=subprocess.PIPE, stdin=subprocess.DEVNULL,
-                                               shell=True).decode('utf-8', 'ignore').splitlines()
+            _cmd_out = subprocess.check_output(
+                _cmd, stderr=subprocess.PIPE, stdin=gen.devnull('r'),
+                shell=True).decode('utf-8', 'ignore').splitlines()
         except Exception as e:
             gen.log(e)
             _cmd_out = ''

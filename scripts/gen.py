@@ -511,6 +511,19 @@ def get_physical_disk_number(usb_disk):
     log("Physical Device Number is %d" % partition.DiskIndex)
     return partition.DiskIndex
 
+
+def fileopen(*args, **kw):
+    if sys.version_info.major <= 2:
+        kw.pop('errors')
+        return open(*args, **kw)
+    else:
+        return open(*args, **kw)
+
+def devnull(mode):
+    if sys.version_info.major <= 2:
+        return open(os.devnull, mode)
+    else:
+        return subprocess.DEVNULL
 if __name__ == '__main__':
     log(quote("""Test-string"""))
     log(has_digit("test-string-with-01-digit"))
